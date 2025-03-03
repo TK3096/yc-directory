@@ -1,3 +1,7 @@
+import { sanityFetch, SanityLive } from '@/sanity/lib/live'
+import { STARTUPS_QUERY } from '@/sanity/lib/queries'
+// import { client } from '@/sanity/lib/client'
+
 import { SearchForm } from '@/features/posts/search/SearchForm'
 import { StartupCard, type StartupTypeCard } from '@/features/posts/StartupCard'
 
@@ -10,24 +14,8 @@ export default async function Home(props: Props) {
 
   const query = (await searchParams).query
 
-  const posts = [
-    {
-      createdAt: '2021-09-01T00:00:00.000Z',
-      views: 22,
-      author: {
-        id: 1,
-        name: 'Author',
-        image:
-          'https://images.unsplash.com/photo-1727466943994-911d391dddb1?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-      id: 1,
-      description: 'This is a description',
-      image:
-        'https://images.unsplash.com/photo-1727466943994-911d391dddb1?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      category: 'Technology',
-      title: 'Startup Name',
-    },
-  ]
+  // const posts = await client.fetch(STARTUPS_QUERY)
+  const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY })
 
   return (
     <>
@@ -52,14 +40,16 @@ export default async function Home(props: Props) {
 
         <ul className='mt-7 card_grid'>
           {posts?.length > 0 ? (
-            posts.map((post: StartupTypeCard) => (
-              <StartupCard key={post.id} post={post} />
+            (posts as StartupTypeCard[]).map((post: StartupTypeCard) => (
+              <StartupCard key={post?._id} post={post} />
             ))
           ) : (
             <p className='no-results'>No startups found</p>
           )}
         </ul>
       </section>
+
+      <SanityLive />
     </>
   )
 }
