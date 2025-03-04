@@ -14,6 +14,7 @@ const eslintConfig = [
   {
     rules: {
       '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+      '@next/next/no-img-element': 'off',
     },
   },
 ]
