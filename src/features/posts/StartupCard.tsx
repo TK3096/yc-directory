@@ -37,7 +37,7 @@ export const StartupCard: React.FC<Props> = (props: Props) => {
           </Link>
         </div>
 
-        <Link href={`/user/${post.author?.id}`}>
+        <Link href={`/user/${post.author?._id}`}>
           <Image
             src={post.author?.image!}
             alt={post.author?.name!}
