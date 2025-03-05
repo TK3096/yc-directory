@@ -5,8 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { EyeIcon } from 'lucide-react'
 
-import { fromatDate } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+
+import { cn, fromatDate } from '@/lib/utils'
 
 export type StartupTypeCard = Omit<Startup, 'author'> & { author?: Author }
 
@@ -72,3 +74,13 @@ export const StartupCard: React.FC<Props> = (props: Props) => {
     </li>
   )
 }
+
+export const StartupCardSkeletion = () => (
+  <>
+    {[0, 1, 2, 3, 4].map((index) => (
+      <li key={cn('skeletion', index)}>
+        <Skeleton className='startup-card_skeleton' />
+      </li>
+    ))}
+  </>
+)
