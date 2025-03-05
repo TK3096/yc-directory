@@ -12,3 +12,7 @@ export const fromatDate = (date: string) => {
     year: 'numeric',
   })
 }
+
+export const parseServerActionResponse = <T>(response: T) => {
+  return JSON.parse(JSON.stringify(response))
+}

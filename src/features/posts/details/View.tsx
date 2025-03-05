@@ -13,9 +13,11 @@ interface Props {
 export const View: React.FC<Props> = async (props: Props) => {
   const { id } = props
 
-  const { views } = await client
+  const result = await client
     .withConfig({ useCdn: false })
     .fetch(STARTUP_VIEWS_QUERY, { id })
+
+  const views = result?.views ?? 0
 
   after(
     async () =>

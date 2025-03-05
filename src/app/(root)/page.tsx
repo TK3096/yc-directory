@@ -10,7 +10,7 @@ interface Props {
   searchParams: Promise<{ query?: string }>
 }
 
-export default async function Home(props: Props) {
+export default async function Page(props: Props) {
   const { searchParams } = props
 
   const query = (await searchParams).query
