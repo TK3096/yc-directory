@@ -12,7 +12,9 @@ interface Props {
 export const UserStartups: React.FC<Props> = async (props: Props) => {
   const { id } = props
 
-  const list = await client.fetch(STARTUPS_BY_AUTHOR_QUERY, { id })
+  const list = (await client.fetch(STARTUPS_BY_AUTHOR_QUERY, {
+    id,
+  })) as StartupTypeCard[]
 
   return (
     <>
