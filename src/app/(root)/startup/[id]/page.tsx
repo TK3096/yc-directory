@@ -3,11 +3,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
-import { STARTUP_BY_ID_QUERY } from '@/sanity/lib/queries'
+import {
+  STARTUP_BY_ID_QUERY,
+  PLAYLIST_BY_SLUG_QUERY,
+} from '@/sanity/lib/queries'
 import markdownit from 'markdown-it'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { View } from '@/features/posts/details/View'
+import { StartupCard, StartupTypeCard } from '@/features/posts/StartupCard'
 
 import { fromatDate } from '@/lib/utils'
 
@@ -18,7 +22,10 @@ const md = markdownit()
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id
 
-  const post = await client.fetch(STARTUP_BY_ID_QUERY, { id })
+  const [post, playlist] = await Promise.all([
+    client.fetch(STARTUP_BY_ID_QUERY, { id }),
+    client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'editor-picks' }),
+  ])
 
   if (!post) return notFound()
 
@@ -77,6 +84,20 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
 
         <hr className='divider' />
+
+        {playlist?.select && (
+          <div className='max-w-4xl mx-auto'>
+            <p className='text-30-semibold'>Editor Picks</p>
+
+            <ul className='mt-7 card_grid-sm'>
+              {(playlist.select as StartupTypeCard[]).map(
+                (post: StartupTypeCard) => (
+                  <StartupCard key={post._id} post={post} />
+                ),
+              )}
+            </ul>
+          </div>
+        )}
 
         <Suspense fallback={<Skeleton className='view_skeleton' />}>
           <View id={id} />

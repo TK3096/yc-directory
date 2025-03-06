@@ -19,6 +19,7 @@ create post with sanity
 - create new post with server action
 - render markdown content with markdown-it
 - create markdown content with react-md-editor
+- parallel fetching data in details page (startup and playlist)
 
 #### Note
 

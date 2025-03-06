@@ -81,7 +81,6 @@ export const PLAYLIST_BY_SLUG_QUERY =
     author->{
       _id,
       name,
-      slug,
       image,
       bio
     },
