@@ -20,6 +20,8 @@ create post with sanity
 - render markdown content with markdown-it
 - create markdown content with react-md-editor
 - parallel fetching data in details page (startup and playlist)
+- search with Form component (next/form)
+- create new post with server action and useActionState
 
 #### Note
 
